@@ -1,0 +1,32 @@
+services:
+  windows:
+    image: dockurr/windows:6.04
+    container_name: ${CONTAINER_NAME:-windows-iot-ltsc}
+    environment:
+      VERSION: "10"
+      RAM_SIZE: ${RAM_SIZE:-8G}
+      CPU_CORES: ${CPU_CORES:-4}
+      DISK_SIZE: ${DISK_SIZE:-128G}
+      LANGUAGE: ${LANGUAGE:-English}
+      REGION: ${REGION:-en-US}
+      KEYBOARD: ${KEYBOARD:-en-US}
+      USERNAME: ${WINDOWS_USERNAME:-Docker}
+      PASSWORD: ${WINDOWS_PASSWORD:?Set WINDOWS_PASSWORD in .env}
+      AUTOLOGIN: "Y"
+      REMOVE: ${REMOVE_ISO:-N}
+      LOG: "Y"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "${WEB_PORT:-18006}:8006"
+      - "${RDP_PORT:-13389}:3389/tcp"
+      - "${RDP_PORT:-13389}:3389/udp"
+    volumes:
+      - ${STORAGE_PATH:-./windows}:/storage
+      - ${ISO_PATH:?Set ISO_PATH in .env}:/custom.iso:ro
+      - ./oem:/oem:ro
+    restart: "no"
+    stop_grace_period: 2m

@@ -1,0 +1,10 @@
+@echo off
+setlocal
+set LOG=C:\\OEM\\customization.log
+
+echo [%date% %time%] Starting customization > "%LOG%"
+rem Copy this file to install.bat and add your licensed installers/scripts.
+rem powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\\OEM\\scripts\\configure.ps1 >> "%LOG%" 2>&1
+
+echo [%date% %time%] Customization complete >> "%LOG%"
+exit /b 0
