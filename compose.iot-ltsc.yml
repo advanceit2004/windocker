@@ -24,6 +24,7 @@ services:
       - "${WEB_PORT:-18006}:8006"
       - "${RDP_PORT:-13389}:3389/tcp"
       - "${RDP_PORT:-13389}:3389/udp"
+      - "${SSH_PORT:-12222}:22"
     volumes:
       - ${STORAGE_PATH:-./windows}:/storage
       - ${ISO_PATH:?Set ISO_PATH in .env}:/custom.iso:ro
